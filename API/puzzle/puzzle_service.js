@@ -1,4 +1,6 @@
 const PuzzleValue = require("./puzzle_value.js");
+maxIterations = 1000000;
+currentIterationCount = 0;
 numbersFrom1to9 = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 sudoku = []
 initalPuzzle = [];
@@ -81,6 +83,7 @@ class PuzzleService {
 
 
     solvePuzzle(input) {
+        currentIterationCount =0;
         var sudokuSolution = [];
         this.buildInitialPuzzlewithZeros();
         for (var i = 0; i < input.puzzle.length; i++) {
@@ -99,6 +102,10 @@ class PuzzleService {
     }
 
     buildPuzzleWithValues() {
+        currentIterationCount = currentIterationCount + 1;
+        if (currentIterationCount > maxIterations){
+            return false;
+        }
         for (var row = 0; row < numbersFrom1to9.length; row++) {
             for (var col = 0; col < numbersFrom1to9.length; col++) {
                 var cols = this.getColumnValues(col, initalPuzzle);

@@ -19,6 +19,7 @@ The project comprises of the following parts
 - Angular
   - node_modules - Contains the dependencies of the project
   - src - root folder for angular project
-  - To run the project UI project change the directory to web
-  - run npm install run npm start
-  - To run the test cases
+  - To run the project change the directory to web and do the following
+    - run npm install 
+    - run npm start
+  - To run the test cases do the following

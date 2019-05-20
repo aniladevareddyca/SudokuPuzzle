@@ -1,5 +1,7 @@
 # SudokuPuzzle
 
+
+
 The project comprises of the following parts
 ## API 
 - NodeJS
@@ -10,6 +12,9 @@ The project comprises of the following parts
     - puzzle_route - contains all the possible routes which can be accessed from the puzzle module
     - puzzle_service - contains core logic to get initial puzzle and to solve it
     - puzzle_value - a custom model used in bulding a puzzle
+  - to run the service change the directory to API folder and do the following
+    - run npm install
+    - run node app.js
 ## UI - Web 
 - Angular
   - node_modules - Contains the dependencies of the project

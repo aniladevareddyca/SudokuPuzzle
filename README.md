@@ -8,12 +8,12 @@ The project comprises of the following parts
   -.babelrc - Configuration file to use ES 2015 in NodeJS
   - puzzle
     - puzzle_route - contains all the possible routes which can be accessed from the puzzle module
-puzzle_service - contains core logic to get initial puzzle and to solve it
-puzzle_value - a custom model used in bulding a puzzle
+    - puzzle_service - contains core logic to get initial puzzle and to solve it
+    - puzzle_value - a custom model used in bulding a puzzle
 ## UI - Web Folder
-Angular
-node_modules - Contains the dependencies of the project
-src - root folder for angular project
-To run the project UI project change the directory to web
-run npm install run npm start
-To run the test cases
+- Angular
+  - node_modules - Contains the dependencies of the project
+  - src - root folder for angular project
+  - To run the project UI project change the directory to web
+  - run npm install run npm start
+  - To run the test cases

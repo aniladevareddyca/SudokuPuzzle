@@ -2,7 +2,7 @@ const PuzzleValue = require("./puzzle_value.js");
 numbersFrom1to9 = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 sudoku = []
 initalPuzzle = [];
-numbersToGenerate = 25;
+numbersToGenerate = 27;
 
 
 
@@ -23,6 +23,7 @@ class PuzzleService {
     //     [[9, 1, 0], [9, 2, 0], [9, 3, 0], [9, 4, 0], [9, 5, 0], [9, 6, 0], [9, 7, 0], [9, 8, 0], [9, 9, 0]],
     // ];
     buildInitialPuzzlewithZeros() {
+        initalPuzzle = [];
         for (var row = 1; row <= 9; row++) {
             var puzzle = [];
             for (var col = 1; col <= 9; col++) {
@@ -34,20 +35,9 @@ class PuzzleService {
         }
     }
 
-    setNumBasedOnDifficultyLevel(level) {
-        if (level == 'E') {
-            numbersToGenerate = 40;
-        } else if (level == 'H') {
-            numbersToGenerate = 17;
-        } else {
-            numbersToGenerate = 25;
-        }
-    }
-
     getNewPuzzle(input) {
         this.buildInitialPuzzlewithZeros();
         var initialPuzzleWithPositions = [];
-        this.setNumBasedOnDifficultyLevel(input.level);
         this.setValuesAndPositionsToPuzzle();
         for (var row = 0; row < initalPuzzle.length; row++) {
             for (var col = 0; col < initalPuzzle[row].length; col++) {
@@ -61,7 +51,6 @@ class PuzzleService {
         var placedNumbersInPuzzle = [];
         console.log(numbersToGenerate);
         while (placedNumbersInPuzzle.length < numbersToGenerate) {
-            console.log(placedNumbersInPuzzle.length);
             var rowPosition = this.getRandomNumberBetween1To9();
             var colPosition = this.getRandomNumberBetween1To9();
             while (initalPuzzle[rowPosition - 1][rowPosition - 1][2] != 0) {
@@ -73,80 +62,8 @@ class PuzzleService {
                 numberToPlace = this.getRandomNumberBetween1To9();
             }
             initalPuzzle[rowPosition - 1][colPosition - 1][2] = numberToPlace;
-            console.log(placedNumbersInPuzzle.length);
             placedNumbersInPuzzle.push(numberToPlace);
         }
-    }
-
-
-
-
-    convertInputToInitialPuzzle() {
-
-    }
-
-
-    solvePuzzle(input) {
-        // console.log(input.puzzle);
-        initalPuzzle = []; //clear initial puzzle and build puzzle with input
-        this.buildInitialPuzzlewithZeros();
-        //console.log(initalPuzzle);
-        for (var i = 0; i < input.puzzle.length; i++) {
-            initalPuzzle[(input.puzzle[i].row - 1)][(input.puzzle[i].col - 1)][2] = input.puzzle[i].val;
-        }
-        console.log(initalPuzzle);
-
-        this.convertInputToInitialPuzzle();
-        // this.placenumbersInPuzzle();
-        var sudokuSolution = [];
-        if (this.solveSudoku()) {
-            for (var row = 0; row < initalPuzzle.length; row++) {
-                for (var col = 0; col < initalPuzzle[row].length; col++) {
-                    sudokuSolution.push(new PuzzleValue(initalPuzzle[row][col][0], initalPuzzle[row][col][1], initalPuzzle[row][col][2]));
-                }
-            }
-        }
-
-        return sudokuSolution;
-    }
-
-    placenumbersInPuzzle() {
-        for (var row = 0; row < initalPuzzle.length; row++) {
-            for (var col = 0; col < initalPuzzle[row].length; col++) {
-                if (initalPuzzle[row][col][2] == 0) {
-                    this.placeNumberIfSafe(row, col)
-                }
-            }
-        }
-
-    }
-
-
-    solveSudoku() {
-        for (var row = 0; row < 9; row++) {
-            for (var col = 0; col < 9; col++) {
-                var cols = this.getColumnValues(col, initalPuzzle);
-                var curretGrid = this.get3x3GridValues(row + 1, col + 1, initalPuzzle);
-                if (initalPuzzle[row][col][2] == 0) {
-                    for (var num = 1; num <= 9; num++) {
-                        if (((initalPuzzle[row].filter(x => x[2] == num)).length == 0 &&
-                            cols.filter(x => x[2] == num).length == 0) &&
-                            (curretGrid.filter(x => x[2] == num).length == 0
-                            )) {
-                            initalPuzzle[row][col][2] = num;
-                            if (this.solveSudoku()) {
-                                return true;
-                            }
-                            else {
-                                initalPuzzle[row][col][2] = 0;
-                            }
-                        }
-                    }
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 
     //check if the number exists in the same row, col or 3/3 grid. If yes then there is a conflict so return true 
@@ -162,18 +79,50 @@ class PuzzleService {
         return false;
     }
 
-    placeNumberIfSafe(row, col) {
-        var cols = this.getColumnValues(col, initalPuzzle);
-        var curretGrid = this.get3x3GridValues(row + 1, col + 1, initalPuzzle);
-        for (var num = 0; num < numbersFrom1to9.length; num++) {
-            var numberToPlace = numbersFrom1to9[num];
-            if (((initalPuzzle[row].filter(x => x[2] == numberToPlace)).length == 0 &&
-                cols.filter(x => x[2] == numberToPlace).length == 0) &&
-                (curretGrid.filter(x => x[2] == numberToPlace).length == 0
-                )) {
-                initalPuzzle[row][col][2] = numberToPlace;
+
+    solvePuzzle(input) {
+        var sudokuSolution = [];
+        this.buildInitialPuzzlewithZeros();
+        for (var i = 0; i < input.puzzle.length; i++) {
+            initalPuzzle[(input.puzzle[i].row - 1)][(input.puzzle[i].col - 1)][2] = input.puzzle[i].val;
+        }
+        if (this.buildPuzzleWithValues()) {
+            for (var row = 0; row < initalPuzzle.length; row++) {
+                for (var col = 0; col < initalPuzzle[row].length; col++) {
+                    sudokuSolution.push(new PuzzleValue(initalPuzzle[row][col][0], initalPuzzle[row][col][1], initalPuzzle[row][col][2]));
+                }
+            }
+        } else {
+            sudokuSolution.push(0);
+        }
+        return sudokuSolution;
+    }
+
+    buildPuzzleWithValues() {
+        for (var row = 0; row < numbersFrom1to9.length; row++) {
+            for (var col = 0; col < numbersFrom1to9.length; col++) {
+                var cols = this.getColumnValues(col, initalPuzzle);
+                var curretGrid = this.get3x3GridValues(row + 1, col + 1, initalPuzzle);
+                if (initalPuzzle[row][col][2] == 0) {
+                    for (var num = 1; num <= numbersFrom1to9.length; num++) {
+                        if (((initalPuzzle[row].filter(x => x[2] == num)).length == 0 &&
+                            cols.filter(x => x[2] == num).length == 0) &&
+                            (curretGrid.filter(x => x[2] == num).length == 0
+                            )) {
+                            initalPuzzle[row][col][2] = num;
+                            if (this.buildPuzzleWithValues()) {
+                                return true;
+                            }
+                            else {
+                                initalPuzzle[row][col][2] = 0;
+                            }
+                        }
+                    }
+                    return false;
+                }
             }
         }
+        return true;
     }
 
     getRandomNumberBetween1To9() {
@@ -216,21 +165,15 @@ class PuzzleService {
         } else {
             var tempMaxCol = col;
             var tempMinCol = col;
-
             while (tempMaxCol % 3 != 0) {
                 tempMaxCol = tempMaxCol + 1;
             }
-
             while ((tempMinCol) % 3 != 0) {
                 tempMinCol = tempMinCol - 1;
             }
-
-
             maxCol = tempMaxCol - 1;
             minCol = tempMinCol;
-
         }
-
         for (var i = minRow; i < puzzle.length; i++) {
             for (var j = minCol; j < puzzle[i].length; j++) {
                 if (i <= maxRow && j <= maxCol) {
@@ -242,12 +185,7 @@ class PuzzleService {
 
             }
         }
-
     }
-
-
-
-
 }
 
 module.exports = PuzzleService;

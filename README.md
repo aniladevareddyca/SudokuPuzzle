@@ -24,6 +24,6 @@ The project comprises of the following parts
 
 ## Sudoku Instructions
   - To start playing click on start game. You would be presented with a inital set of puzzles. As soon as the puzzle is        started a timer is starts to help you to keep a track of your record.
-  - You cannot enter any value into the the puzzle. This version supports is a read only.
+  - You cannot enter any value into the the puzzle. This version is a read only.
   - When you are ready click on solve puzzle and the algorithm should solve the puzzle for you.
   - There could be scenarios where a possible solution cannot be found for a given puzzle. In those cases you would have to start a new puzzle.

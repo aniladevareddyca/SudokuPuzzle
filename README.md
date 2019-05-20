@@ -1,7 +1,5 @@
 # SudokuPuzzle
 
-
-
 The project comprises of the following parts
 ## API 
 - NodeJS
@@ -23,3 +21,8 @@ The project comprises of the following parts
     - run npm install 
     - run npm start
   - To run the test cases do the following
+
+## Sudoku Instructions
+  - To start playing click on start game. You would be presented with a inital set of puzzles. As soon as the puzzle is        started a timer is started to help you to keep a track of your record.
+  - You cannot enter any value into the the puzzle. This version supports is a read only.
+  - When you are ready click on solve puzzle and the algorithm should solve the puzzle for you.

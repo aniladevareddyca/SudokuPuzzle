@@ -27,4 +27,4 @@ The project comprises of the following parts
   - You cannot enter any value into the the puzzle. This version is a read only.
   - When you are ready click on solve puzzle and the algorithm should solve the puzzle for you.
   - There could be scenarios where a possible solution cannot be found for a given puzzle. In those cases you would have to start a new puzzle.  
-![alt text] (https://github.com/aniladevareddyca/SudokuPuzzle/blob/master/web/src/assets/Screenshot%202019-05-20%20at%203.44.17%20PM.png?raw=true)
+![Alt text] (https://github.com/aniladevareddyca/SudokuPuzzle/blob/master/web/src/assets/Screenshot%202019-05-20%20at%203.44.17%20PM.png?raw=true)

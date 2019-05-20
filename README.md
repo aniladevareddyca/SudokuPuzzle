@@ -1,6 +1,6 @@
 # SudokuPuzzle
 
-The project comprises of the following parts
+The project comprises of the following parts \n
   API - API Folder
   UI - Web Folder
   

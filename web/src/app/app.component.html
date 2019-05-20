@@ -1,14 +1,9 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div class="text-center">
+ 
   <h1>Sudoku</h1>
-  <div id="header">
-    <label>Select Difficulty Level:</label>
-    <select id="difficulty-level" [(ngModel)] ="difficultyLevel">
-      <option value="E">Easy</option>
-      <option value="M">Medium</option>
-      <option value="H">Hard</option>
-    </select>  
-    <span id="timer">Timer: <span *ngIf="!duration">0:00:00</span>{{duration}}</span>
+  <div>
+    <span >Timer: <span *ngIf="!duration">0:00:00</span>{{duration}}</span>
   </div>
   <div>
     <table class="table" id="grid">
@@ -19,11 +14,16 @@
       </tbody>
     </table>
   </div> 
+  <notifier-container></notifier-container>
   <div id="button-div">
-      <button type="button" class="btn btn-primary" [disabled]="disableStart" (click)="buildNewPuzzle();startTimer()">Start New Game</button>
+      <button type="button" class="btn btn-primary"  
+      [disabled]="disableStart" (click)="buildNewPuzzle();startTimer()">Start New Game</button>
     <button type="button" class="btn btn-primary" [disabled]="!disableStart" (click)="solvePuzzle();clearTimer()">Solve</button>
   </div> 
 </div>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
 
 
+
+  
 

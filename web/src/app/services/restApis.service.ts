@@ -15,8 +15,8 @@ export class RestApisService{
         return this._http.get<string>(this.baseURL + '/ping');
     }
 
-    getNewPuzzle(level: string) : Observable<PuzzleInput>{
-        return this._http.get<PuzzleInput>(this.baseURL + '/api/v1/getPuzzle/' + level);
+    getNewPuzzle() : Observable<PuzzleInput>{
+        return this._http.get<PuzzleInput>(this.baseURL + '/api/v1/getPuzzle');
     }
 
     solvePuzzle(request: Array<Puzzle>) : Observable<PuzzleInput>{

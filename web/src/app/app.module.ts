@@ -7,6 +7,10 @@ import { HttpClient, HttpHandler, HttpClientModule } from '@angular/common/http'
 import { TableStructure } from './table-structure.directive';
 import { LoggerService } from './services/logger.service';
 import { FormsModule } from '@angular/forms';
+import { NotifierModule } from 'angular-notifier';
+
+import { NgxLoadingModule } from 'ngx-loading';
+
 
 @NgModule({
   declarations: [
@@ -17,6 +21,9 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    NgxLoadingModule.forRoot({}),
+
+    NotifierModule,
   ],
   providers: [RestApisService, LoggerService],
   bootstrap: [AppComponent]

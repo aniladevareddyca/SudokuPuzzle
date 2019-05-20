@@ -1,10 +1,10 @@
 # SudokuPuzzle
 
 The project comprises of the following parts
-##API - API Folder
-##UI - Web Folder
+## API - API Folder
+## UI - Web Folder
 
-##API 
+## API 
 NodeJS
 node_modules - Contains the dependencies of the project
 app.js - Server file that is used to start the server. Port is configurable currently it runs on 8885
@@ -14,7 +14,7 @@ puzzle_route - contains all the possible routes which can be accessed from the p
 puzzle_service - contains core logic to get initial puzzle and to solve it
 puzzle_value - a custom model used in bulding a puzzle
 
-##Web
+## Web
 Angular
 node_modules - Contains the dependencies of the project
 src - root folder for angular project

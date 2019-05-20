@@ -2,8 +2,8 @@
 
 The project comprises of the following parts
 ## API - API Folder
-NodeJS
-node_modules - Contains the dependencies of the project
+- NodeJS
+	- node_modules - Contains the dependencies of the project
 app.js - Server file that is used to start the server. Port is configurable currently it runs on 8885
 .babelrc - Configuration file to use ES 2015 in NodeJS
 puzzle

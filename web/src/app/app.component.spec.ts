@@ -15,6 +15,7 @@ fdescribe('AppComponent', () => {
   let app: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
   let rest: RestApisService;
+  let event: KeyboardEvent;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -65,13 +66,13 @@ fdescribe('AppComponent', () => {
     app.buildNewPuzzle(false);
     expect(app.isBuildYourOwn).toBeFalsy();
   })
-  it('should set isBuildYourOwn flag to false if user buils new puzzle ', () => {
+  it('should set isBuildYourOwn flag to false if user builds a new puzzle ', () => {
     app.isBuildYourOwn  = false;
     app.buildOwnPuzzle();
     expect(app.isBuildYourOwn).toBeTruthy();
   })
 
-  it('should build new puzzle set the response to inputGridValues', () => {
+  it('should build new puzzle and set the response to inputGridValues', () => {
     spyOn(rest, 'getNewPuzzle').and.returnValue(of(new PuzzleInput([new Puzzle(1, 1, 1)])));
     app.buildNewPuzzle(false);
     expect(app.inputGridValues).toEqual([new Puzzle(1, 1, 1)]);
@@ -103,6 +104,7 @@ fdescribe('AppComponent', () => {
     app.startTimer();
     expect(setInterval).toHaveBeenCalled();
   })
+
 
 
 });

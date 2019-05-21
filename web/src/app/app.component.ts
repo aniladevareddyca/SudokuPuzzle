@@ -78,6 +78,13 @@ export class AppComponent implements OnInit{
     })
   }
 
+  allowNumbersFrom1to9(event){
+    if (event.target.value < 1 || event.target.value > 10){
+      event.preventDefault();
+      event.target.value = '';
+    }
+  }
+
   //Resets duration to 0:00:00 and clears out setInterval
   clearTimer() {
     this.durationMoment = '';

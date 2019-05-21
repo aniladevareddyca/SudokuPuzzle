@@ -23,9 +23,8 @@ The project comprises of the following parts
   - To run the test cases do the following
 
 ## Sudoku Instructions
-  - To start playing click on start game. You would be presented with a inital set of puzzles. As soon as the puzzle is        started a timer is starts to help you to keep a track of your record.
-  - You cannot enter any value into the the puzzle. This version is a read only.
-  - When you are ready click on solve puzzle and the algorithm should solve the puzzle for you.
-  - There could be scenarios where a possible solution cannot be found for a given puzzle. In those cases you would have to start a new puzzle.  
+  - The intial puzzle is hard coded. To view the results click on solve puzzle.
+  - To create your own puzzle click on build your own. This would change the grid to editable mode. Enter the puzzle values and click on solve. If it is a valid sudoku puzzle you would be presented with results.
+  - Generate new will add a puzzle for you automatically.
   ##
 ![Screenshot](https://github.com/aniladevareddyca/SudokuPuzzle/blob/master/web/src/assets/Screenshot%202019-05-20%20at%203.44.17%20PM.png?raw=true)

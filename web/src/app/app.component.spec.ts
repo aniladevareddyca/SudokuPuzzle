@@ -7,13 +7,22 @@ import { Puzzle } from './models/puzzle.model';
 import { TableStructure } from './table-structure.directive';
 import { LoggerService } from './services/logger.service';
 import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { NgxLoadingModule } from 'ngx-loading';
 
-describe('AppComponent', () => {
-  let app : AppComponent;
+fdescribe('AppComponent', () => {
+  let app: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
   let rest: RestApisService;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        BrowserModule,
+        HttpClientModule,
+        FormsModule,
+        NgxLoadingModule.forRoot({}),
+      ],
       declarations: [
         AppComponent,
         TableStructure
@@ -28,6 +37,14 @@ describe('AppComponent', () => {
     }).compileComponents();
   }));
 
+  beforeEach(function () {
+    jasmine.clock().install();
+  });
+
+  afterEach(function () {
+    jasmine.clock().uninstall();
+  });
+
   it('should create the app', () => {
     fixture = TestBed.createComponent(AppComponent);
     app = fixture.debugElement.componentInstance;
@@ -35,24 +52,54 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'web'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('web');
-  });
-
   it('should render title in a h1 tag', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to web!');
+    expect(compiled.querySelector('h1').textContent).toContain('Sudoku');
   });
 
-  it('should build new puzzle and disable start button',()=>{
+  it('should build new puzzle and disable start button', () => {
     app.disableStart = false;
-    spyOn(rest,'getNewPuzzle').and.returnValue(of(new PuzzleInput([new Puzzle(1,1,1)])));
+    spyOn(rest, 'getNewPuzzle').and.returnValue(of(new PuzzleInput([new Puzzle(1, 1, 1)])));
     app.buildNewPuzzle();
     expect(app.disableStart).toBeTruthy();
-
   })
+
+  it('should build new puzzle and disable start button and set the response to inputGridValues', () => {
+    app.disableStart = false;
+    spyOn(rest, 'getNewPuzzle').and.returnValue(of(new PuzzleInput([new Puzzle(1, 1, 1)])));
+    app.buildNewPuzzle();
+    expect(app.disableStart).toBeTruthy();
+    expect(app.inputGridValues).toEqual([new Puzzle(1, 1, 1)]);
+  })
+
+  it('should disable loading and enable start button once the puzzle is solved and set the response to inputGridValues', () => {
+    app.loading = true;
+    spyOn(rest, 'solvePuzzle').and.returnValue(of(new PuzzleInput([new Puzzle(1, 1, 1)])));
+    app.solvePuzzle();
+    expect(app.loading).toBeFalsy();
+    expect(app.disableStart).toBeFalsy();
+    expect(app.inputGridValues).toEqual([new Puzzle(1, 1, 1)]);
+  })
+
+
+  it('should clear the timer', () => {
+    app.duration = '00:00:00'
+    app.clearTimer();
+    expect(app.duration).toEqual('');
+  })
+
+  it('should start the timer', () => {
+    var timerCallback = spyOn(global, 'setInterval');
+    setTimeout(function () {
+      timerCallback();
+    }, 1000);
+    expect(setInterval).not.toHaveBeenCalled();
+    jasmine.clock().tick(1001);
+    app.startTimer();
+    expect(setInterval).toHaveBeenCalled();
+  })
+
+
 });

@@ -22,8 +22,6 @@ import { NgxLoadingModule } from 'ngx-loading';
     HttpClientModule,
     FormsModule,
     NgxLoadingModule.forRoot({}),
-
-    NotifierModule,
   ],
   providers: [RestApisService, LoggerService],
   bootstrap: [AppComponent]

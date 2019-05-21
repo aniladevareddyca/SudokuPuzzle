@@ -1,41 +1,34 @@
 
-
- button{
-	width: 183px;
-	margin-left: 10px;
-	margin-bottom: 10px;
-}
-
 #button-div{
 	padding-top:20px;
+	button{
+		width: 183px;
+		margin-left: 10px;
+		margin-bottom: 10px;
+	}
+	button:disabled{
+		cursor:not-allowed;
+	}
 }
 
-button:disabled{
-	cursor:not-allowed;
-}
-
- h1{
+h1{
 	color: #fff;
-    font-size: 50px;
-    text-shadow: #444 1px 1px 2px;
-    font-family: Slackey,"Lucida Grande","Lucida Sans Unicode",Tahoma,Geneva,Arial,Verdana,sans-serif;
-    padding: 20px; 
-    background-color: #637e9a;
+	font-size: 50px;
+	text-shadow: #444 1px 1px 2px;
+	font-family: Slackey,"Lucida Grande","Lucida Sans Unicode",Tahoma,Geneva,Arial,Verdana,sans-serif;
+	padding: 20px; 
+	background-color: #637e9a;
 	box-shadow: 0 2px 5px 0 rgba(0, 0, 0,.3);
- }
+}
 
- label{
-	padding-right:15px;
- }
 
- tbody{
-	background-color: #8f96b1;
-	box-shadow: 0px 2px 18px 0px rgba(0,0,0,0.5)
- }
-
- #grid{
+#grid{
 	margin: auto;
 	width: 27% !important;
+	tbody{
+		background-color: #8f96b1;
+		box-shadow: 0px 2px 18px 0px rgba(0,0,0,0.5)
+	}	
 	tr:first-child td {
 		border-top: 4px solid #637e9a;
 	}	
@@ -59,7 +52,6 @@ button:disabled{
 		input:hover {
 			background: #eee;
 		}		
-	}
-	
- }
+	}	
+}
 

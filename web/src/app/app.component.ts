@@ -7,39 +7,29 @@ import * as moment from 'moment';
 import { LoggerService } from './services/logger.service';
 import { PuzzleInput } from './models/puzzle-input.model';
 import { Puzzle } from './models/puzzle.model';
-import { NotifierService } from 'angular-notifier';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent {
   public inputGridValues: Array<Puzzle> = [];
 
   @ViewChild("gridRef") gridRef: ElementRef;
-  private durationMoment;
+  public durationMoment;
   private resettingInterval;
-  private duration;
+  public duration;
   public disableStart = false;
-  public puzzleIndexes : Array<number>=[];
-  public popoverTitle: string = 'Popover title';
-  public popoverMessage: string = 'Popover description';
-  public confirmClicked: boolean = false;
-  public cancelClicked: boolean = false;
+  public initialPuzzleIndexes: Array<Puzzle> = [];
   public loading = false;
 
   constructor(
     private _rest: RestApisService,
-    private _log: LoggerService,
-    private notifierService: NotifierService
-    ) { }
+    private _log: LoggerService
+  ) { }
 
-    ngOnInit() {
-
-     
-
-    }
-  
+  //Starts and increments the timer(0:00:00) 
   startTimer() {
     clearInterval(this.resettingInterval);
     this.durationMoment = moment().startOf('day');
@@ -47,24 +37,28 @@ export class AppComponent implements OnInit{
       this.duration = this.durationMoment.add(1, 's').format('H:mm:ss')
     }, 1000)
   }
-  clearGridValues(){
+
+  //clears out the values that are assigned to td elements and sets background color to white
+  clearGridValues() {
     Array.from(this.gridRef.nativeElement.children).forEach((row: any, index) => {
-        Array.from(row.children).forEach((value, index) => {
-            row.children[index].children[0].setAttribute('value', '');
-            row.children[index].children[0].style.backgroundColor = "white";
-          })
+      Array.from(row.children).forEach((value, index) => {
+        row.children[index].children[0].setAttribute('value', '');
+        row.children[index].children[0].style.backgroundColor = "white";
+      })
     })
   }
+
+  //Used template reference to get children of table and assigned values to td elements based on row and col positions.
+  //Sets background color of initial puzzle to grey and background color of final puzzle to yellow
   setGridValues(color: string) {
     this.inputGridValues.forEach((grid: any) => {
-      Array.from(this.gridRef.nativeElement.children).forEach((row: any, index) => {
-        if (index === (grid.row - 1)) {
-          Array.from(row.children).forEach((value, index) => {
-            if (index === grid.col - 1 && grid.val != 0) {
-              //&& this.puzzleIndexes.filter(x => x == index).length==0
-              this.puzzleIndexes.push(index)
-              row.children[index].children[0].setAttribute('value', grid.val);
-              row.children[index].children[0].style.backgroundColor = color;
+      Array.from(this.gridRef.nativeElement.children).forEach((row: any, rowIndex) => {
+        if (rowIndex === (grid.row - 1)) {
+          Array.from(row.children).forEach((value, colIndex) => {
+            if (colIndex === grid.col - 1 && grid.val != 0 && this.initialPuzzleIndexes.filter(x => (x.row == rowIndex && x.col == colIndex)).length == 0) {
+              this.initialPuzzleIndexes.push(new Puzzle(rowIndex, colIndex, grid.val));
+              row.children[colIndex].children[0].setAttribute('value', grid.val);
+              row.children[colIndex].children[0].style.backgroundColor = color;
             }
           })
         }
@@ -72,13 +66,16 @@ export class AppComponent implements OnInit{
     })
   }
 
+  //Resets duration to 0:00:00 and clears out setInterval
   clearTimer() {
     this.durationMoment = '';
     this.duration = '';
     clearInterval(this.resettingInterval);
   }
 
-  buildNewPuzzle(): void {   
+  //Makes service call to display initial puzzle with random values
+  buildNewPuzzle(): void {
+    this.initialPuzzleIndexes = [];
     this._rest.getNewPuzzle()
       .subscribe((response: PuzzleInput) => {
         this.disableStart = true;
@@ -90,21 +87,21 @@ export class AppComponent implements OnInit{
       });
   }
 
+  //Makes service call and retrieves solution for the puzzle
   solvePuzzle() {
     this.loading = true;
     this._rest.solvePuzzle(this.inputGridValues)
       .subscribe((response: PuzzleInput) => {
         this.loading = false;
-        if(response.puzzle.length < 81){
-          this.notifierService.notify( 'success', 'Unable to Solve Puzzle. Please start a new one' );
-          this.disableStart = false;
+        this.disableStart = false;
+        if (response.puzzle.length < 81) {
+          alert('Unable to Solve Puzzle. Please start a new one');
           return;
         }
-        this.disableStart = false;
         this.inputGridValues = response.puzzle;
-        this.setGridValues('red');
-      }, getNewPuzzleErr => {
-        this._log.log(getNewPuzzleErr);
+        this.setGridValues('yellow');
+      }, solvePuzzleErr => {
+        this._log.log(solvePuzzleErr);
       });
   }
 }

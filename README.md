@@ -24,7 +24,11 @@ The project comprises of the following parts
 
 ## Sudoku Instructions
   - The intial puzzle is hard coded. To view the results click on solve puzzle.
-  - To create your own puzzle click on build your own. This would change the grid to editable mode. Enter the puzzle values and click on solve. If it is a valid sudoku puzzle you would be presented with results.
-  - Generate new will add a puzzle for you automatically.
+  - To create your own puzzle 
+    - click on build your own. This would change the grid to editable mode. 
+    - Enter the puzzle values and click on solve. 
+    - If it is a valid sudoku puzzle you would be presented with results.  
+    - Generate new will add a puzzle for you automatically.  
+    - In certain scenarios you would not get a solution as not all the auto generated puzzles would have a sudoku solution for it  
   ##
 ![Screenshot](https://github.com/aniladevareddyca/SudokuPuzzle/blob/master/web/src/assets/Screenshot%202019-05-20%20at%203.44.17%20PM.png?raw=true)

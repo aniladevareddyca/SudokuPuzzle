@@ -20,7 +20,7 @@ export class AppComponent {
   public durationMoment;
   private resettingInterval;
   public duration;
-  public disableStart = false;
+  public isBuildYourOwn = false;
   public initialPuzzleIndexes: Array<Puzzle> = [];
   public loading = false;
 
@@ -39,10 +39,15 @@ export class AppComponent {
   }
 
   //clears out the values that are assigned to td elements and sets background color to white
-  clearGridValues() {
+  clearGridValues(nonEditable: boolean) {
     Array.from(this.gridRef.nativeElement.children).forEach((row: any, index) => {
       Array.from(row.children).forEach((value, index) => {
-        row.children[index].children[0].setAttribute('value', '');
+        if (nonEditable) {
+          row.children[index].children[0].setAttribute('readOnly', nonEditable);
+        } else {
+          row.children[index].children[0].removeAttribute('readOnly');
+        }
+        row.children[index].children[0].value = '';
         row.children[index].children[0].style.backgroundColor = "white";
       })
     })
@@ -57,7 +62,7 @@ export class AppComponent {
           Array.from(row.children).forEach((value, colIndex) => {
             if (colIndex === grid.col - 1 && grid.val != 0 && this.initialPuzzleIndexes.filter(x => (x.row == rowIndex && x.col == colIndex)).length == 0) {
               this.initialPuzzleIndexes.push(new Puzzle(rowIndex, colIndex, grid.val));
-              row.children[colIndex].children[0].setAttribute('value', grid.val);
+              row.children[colIndex].children[0].value = grid.val;
               row.children[colIndex].children[0].style.backgroundColor = color;
             }
           })
@@ -75,25 +80,50 @@ export class AppComponent {
 
   //Makes service call to display initial puzzle with random values
   buildNewPuzzle(): void {
+    this.isBuildYourOwn = false;
     this.initialPuzzleIndexes = [];
     this._rest.getNewPuzzle()
       .subscribe((response: PuzzleInput) => {
-        this.disableStart = true;
         this.inputGridValues = response.puzzle;
-        this.clearGridValues();
+        this.clearGridValues(true);
         this.setGridValues('lightgrey');
       }, getNewPuzzleErr => {
         this._log.log(getNewPuzzleErr);
       });
   }
 
+  //allows user to edit grid
+  buildOwnPuzzle(): void {
+    this.isBuildYourOwn = true;
+    this.clearGridValues(false);
+  }
+
+  //gets the valus from dom elements and builds service request
+  buildRequest() {
+    this.inputGridValues = [];
+    this.initialPuzzleIndexes = [];
+    let val: number = 0;
+    Array.from(this.gridRef.nativeElement.children).forEach((row: any, rowIndex) => {
+      Array.from(row.children).forEach((value, colIndex) => {
+        val = row.children[colIndex].children[0].value == '' ? 0 : parseInt(row.children[colIndex].children[0].value);
+        this.inputGridValues.push(new Puzzle(rowIndex + 1, colIndex + 1, val));
+        if (val != 0) {
+          this.initialPuzzleIndexes.push(new Puzzle(rowIndex, colIndex, val));
+        }
+      })
+    })
+  }
+
   //Makes service call and retrieves solution for the puzzle
   solvePuzzle() {
+    if (this.isBuildYourOwn) {
+      this.buildRequest();
+    }
     this.loading = true;
     this._rest.solvePuzzle(this.inputGridValues)
       .subscribe((response: PuzzleInput) => {
         this.loading = false;
-        this.disableStart = false;
+        this.isBuildYourOwn = false;
         if (response.puzzle.length < 81) {
           alert('Unable to Solve Puzzle. Please start a new one');
           return;

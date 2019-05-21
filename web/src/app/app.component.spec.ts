@@ -59,18 +59,21 @@ fdescribe('AppComponent', () => {
     expect(compiled.querySelector('h1').textContent).toContain('Sudoku');
   });
 
-  it('should build new puzzle and disable start button', () => {
-    app.disableStart = false;
+  it('should set isBuildYourOwn flag to false for generate new puzzle ', () => {
+    app.isBuildYourOwn  = true;
     spyOn(rest, 'getNewPuzzle').and.returnValue(of(new PuzzleInput([new Puzzle(1, 1, 1)])));
     app.buildNewPuzzle();
-    expect(app.disableStart).toBeTruthy();
+    expect(app.isBuildYourOwn).toBeFalsy();
+  })
+  it('should set isBuildYourOwn flag to false if user buils new puzzle ', () => {
+    app.isBuildYourOwn  = false;
+    app.buildOwnPuzzle();
+    expect(app.isBuildYourOwn).toBeTruthy();
   })
 
-  it('should build new puzzle and disable start button and set the response to inputGridValues', () => {
-    app.disableStart = false;
+  it('should build new puzzle set the response to inputGridValues', () => {
     spyOn(rest, 'getNewPuzzle').and.returnValue(of(new PuzzleInput([new Puzzle(1, 1, 1)])));
     app.buildNewPuzzle();
-    expect(app.disableStart).toBeTruthy();
     expect(app.inputGridValues).toEqual([new Puzzle(1, 1, 1)]);
   })
 
@@ -79,7 +82,7 @@ fdescribe('AppComponent', () => {
     spyOn(rest, 'solvePuzzle').and.returnValue(of(new PuzzleInput([new Puzzle(1, 1, 1)])));
     app.solvePuzzle();
     expect(app.loading).toBeFalsy();
-    expect(app.disableStart).toBeFalsy();
+    expect(app.isBuildYourOwn).toBeFalsy();
     expect(app.inputGridValues).toEqual([new Puzzle(1, 1, 1)]);
   })
 

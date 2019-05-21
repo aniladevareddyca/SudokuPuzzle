@@ -4,7 +4,7 @@ The project comprises of the following parts
 ## API 
 - NodeJS
 	- node_modules - Contains the dependencies of the project
-  - app.js - Server file that is used to start the server. Port is configurable currently it runs on 8885
+  - app.js - Server file that is used to start the server. Port is configurable currently it runs on 8885  
   -.babelrc - Configuration file to use ES 2015 in NodeJS
   - puzzle
     - puzzle_route - contains all the possible routes which can be accessed from the puzzle module
@@ -23,9 +23,12 @@ The project comprises of the following parts
   - To run the test cases do the following
 
 ## Sudoku Instructions
-  - To start playing click on start game. You would be presented with a inital set of puzzles. As soon as the puzzle is        started a timer is starts to help you to keep a track of your record.
-  - You cannot enter any value into the the puzzle. This version is a read only.
-  - When you are ready click on solve puzzle and the algorithm should solve the puzzle for you.
-  - There could be scenarios where a possible solution cannot be found for a given puzzle. In those cases you would have to start a new puzzle.  
+  - The intial puzzle is hard coded. To view the results click on solve puzzle.
+  - To create your own puzzle 
+    - click on build your own. This would change the grid to editable mode. 
+    - Enter the puzzle values and click on solve. 
+    - If it is a valid sudoku puzzle you would be presented with results.  
+  - Generate new will add a puzzle for you automatically.  
+    - In certain scenarios you would not get a solution as not all the auto generated puzzles would have a sudoku solution for it  
   ##
 ![Screenshot](https://github.com/aniladevareddyca/SudokuPuzzle/blob/master/web/src/assets/Screenshot%202019-05-20%20at%203.44.17%20PM.png?raw=true)

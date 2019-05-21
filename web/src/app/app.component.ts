@@ -13,7 +13,7 @@ import { Puzzle } from './models/puzzle.model';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   public inputGridValues: Array<Puzzle> = [];
 
   @ViewChild("gridRef") gridRef: ElementRef;
@@ -28,6 +28,13 @@ export class AppComponent {
     private _rest: RestApisService,
     private _log: LoggerService
   ) { }
+
+
+  ngOnInit(){
+    //load hardcoded sudoku on Init
+    this.buildNewPuzzle(true);
+    this.startTimer();
+  }
 
   //Starts and increments the timer(0:00:00) 
   startTimer() {
@@ -79,13 +86,13 @@ export class AppComponent {
   }
 
   //Makes service call to display initial puzzle with random values
-  buildNewPuzzle(): void {
+  buildNewPuzzle(hardCoded : boolean): void {
     this.isBuildYourOwn = false;
     this.initialPuzzleIndexes = [];
-    this._rest.getNewPuzzle()
+    this.clearGridValues(true);
+    this._rest.getNewPuzzle(hardCoded)
       .subscribe((response: PuzzleInput) => {
         this.inputGridValues = response.puzzle;
-        this.clearGridValues(true);
         this.setGridValues('lightgrey');
       }, getNewPuzzleErr => {
         this._log.log(getNewPuzzleErr);

@@ -2,9 +2,9 @@ const PuzzleService = require("./puzzle_service.js");
 
 
 module.exports = function(app) {
-	 app.get('/api/v1/getPuzzle', (req, res) => {
+	 app.get('/api/v1/getPuzzle/:hardCoded', (req, res) => {
 		let puzzleService = new PuzzleService();
-		let puzzle = puzzleService.getNewPuzzle();
+		let puzzle = puzzleService.getNewPuzzle(req.params);
 		res.header("Access-Control-Allow-Origin", "*");
 		res.json({"puzzle":puzzle});
 	});

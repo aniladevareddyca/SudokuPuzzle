@@ -3,47 +3,53 @@ maxIterations = 1000000;
 currentIterationCount = 0;
 numbersFrom1to9 = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 sudoku = []
-initalPuzzle = [];
+initialPuzzle = [];
 numbersToGenerate = 20;
-
-
 
 class PuzzleService {
     constructor() {
     }
-    // Builds Initial puzzle with below format
-    //    [[[1, 1, 0], [1, 2, 0], [1, 3, 0], [1, 4, 0], [1, 5, 0], [1, 6, 0], [1, 7, 0], [1, 8, 0], [1, 9, 0]],
-    //     [[2, 1, 0], [2, 2, 0], [2, 3, 0], [2, 4, 0], [2, 5, 0], [2, 6, 0], [2, 7, 0], [2, 8, 0], [2, 9, 0]],
-    //     [[3, 1, 0], [3, 2, 0], [3, 3, 0], [3, 4, 0], [3, 5, 0], [3, 6, 0], [3, 7, 0], [3, 8, 0], [3, 9, 0]],
 
-    //     [[4, 1, 0], [4, 2, 0], [4, 3, 0], [4, 4, 0], [4, 5, 0], [4, 6, 0], [4, 7, 0], [4, 8, 0], [4, 9, 0]],
-    //     [[5, 1, 0], [5, 2, 0], [5, 3, 0], [5, 4, 0], [5, 5, 6], [5, 6, 0], [5, 7, 0], [5, 8, 0], [5, 9, 0]],
-    //     [[6, 1, 0], [6, 2, 5], [6, 3, 0], [6, 4, 0], [6, 5, 9], [6, 6, 0], [6, 7, 6], [6, 8, 0], [6, 9, 0]],
-
-    //     [[7, 1, 0], [7, 2, 0], [7, 3, 0], [7, 4, 0], [7, 5, 0], [7, 6, 0], [7, 7, 0], [7, 8, 0], [7, 9, 0]],
-    //     [[8, 1, 0], [8, 2, 0], [8, 3, 0], [8, 4, 0], [8, 5, 0], [8, 6, 0], [8, 7, 0], [8, 8, 0], [8, 9, 0]],
-    //     [[9, 1, 0], [9, 2, 0], [9, 3, 0], [9, 4, 0], [9, 5, 0], [9, 6, 0], [9, 7, 0], [9, 8, 0], [9, 9, 0]],
-    // ];
     buildInitialPuzzlewithZeros() {
-        initalPuzzle = [];
+        initialPuzzle = [];
         for (var row = 1; row <= 9; row++) {
             var puzzle = [];
             for (var col = 1; col <= 9; col++) {
                 puzzle.push([row, col, 0]);
                 if (col == 9) {
-                    initalPuzzle.push(...[puzzle]);
+                    initialPuzzle.push(...[puzzle]);
                 }
             }
         }
     }
 
+    buildHardCodedPuzzle() {
+        initialPuzzle = 
+            [[[1, 1, 0], [1, 2, 0], [1, 3, 5], [1, 4, 9], [1, 5, 0], [1, 6, 0], [1, 7, 4], [1, 8, 2], [1, 9, 0]],
+            [[2, 1, 0], [2, 2, 7], [2, 3, 1], [2, 4, 0], [2, 5, 0], [2, 6, 4], [2, 7, 6], [2, 8, 8], [2, 9, 0]],
+            [[3, 1, 0], [3, 2, 0], [3, 3, 0], [3, 4, 6], [3, 5, 0], [3, 6, 7], [3, 7, 9], [3, 8, 0], [3, 9, 0]],
+
+            [[4, 1, 3], [4, 2, 4], [4, 3, 0], [4, 4, 0], [4, 5, 0], [4, 6, 2], [4, 7, 0], [4, 8, 0], [4, 9, 8]],
+            [[5, 1, 8], [5, 2, 0], [5, 3, 6], [5, 4, 0], [5, 5, 7], [5, 6, 0], [5, 7, 0], [5, 8, 0], [5, 9, 0]],
+            [[6, 1, 0], [6, 2, 9], [6, 3, 2], [6, 4, 5], [6, 5, 0], [6, 6, 0], [6, 7, 7], [6, 8, 0], [6, 9, 0]],
+
+            [[7, 1, 0], [7, 2, 0], [7, 3, 0], [7, 4, 0], [7, 5, 2], [7, 6, 6], [7, 7, 3], [7, 8, 0], [7, 9, 9]],
+            [[8, 1, 2], [8, 2, 6], [8, 3, 0], [8, 4, 0], [8, 5, 4], [8, 6, 5], [8, 7, 0], [8, 8, 7], [8, 9, 1]],
+            [[9, 1, 7], [9, 2, 3], [9, 3, 0], [9, 4, 8], [9, 5, 0], [9, 6, 1], [9, 7, 0], [9, 8, 5], [9, 9, 0]],
+            ];
+    }
+
     getNewPuzzle(input) {
-        this.buildInitialPuzzlewithZeros();
+        if (input.hardCoded == 'true') {
+            this.buildHardCodedPuzzle();
+        } else {
+            this.buildInitialPuzzlewithZeros();
+            this.setValuesAndPositionsToPuzzle();
+        }
         var initialPuzzleWithPositions = [];
-        this.setValuesAndPositionsToPuzzle();
-        for (var row = 0; row < initalPuzzle.length; row++) {
-            for (var col = 0; col < initalPuzzle[row].length; col++) {
-                initialPuzzleWithPositions.push(new PuzzleValue(initalPuzzle[row][col][0], initalPuzzle[row][col][1], initalPuzzle[row][col][2]));
+        for (var row = 0; row < initialPuzzle.length; row++) {
+            for (var col = 0; col < initialPuzzle[row].length; col++) {
+                initialPuzzleWithPositions.push(new PuzzleValue(initialPuzzle[row][col][0], initialPuzzle[row][col][1], initialPuzzle[row][col][2]));
             }
         }
         return initialPuzzleWithPositions;
@@ -54,7 +60,7 @@ class PuzzleService {
         while (placedNumbersInPuzzle.length < numbersToGenerate) {
             var rowPosition = this.getRandomNumberBetween1To9();
             var colPosition = this.getRandomNumberBetween1To9();
-            while (initalPuzzle[rowPosition - 1][rowPosition - 1][2] != 0) {
+            while (initialPuzzle[rowPosition - 1][rowPosition - 1][2] != 0) {
                 rowPosition = this.getRandomNumberBetween1To9();
                 colPosition = this.getRandomNumberBetween1To9();
             }
@@ -62,16 +68,16 @@ class PuzzleService {
             while (this.isConflict(rowPosition, colPosition, numberToPlace)) {
                 numberToPlace = this.getRandomNumberBetween1To9();
             }
-            initalPuzzle[rowPosition - 1][colPosition - 1][2] = numberToPlace;
+            initialPuzzle[rowPosition - 1][colPosition - 1][2] = numberToPlace;
             placedNumbersInPuzzle.push(numberToPlace);
         }
     }
 
     //check if the number exists in the same row, col or 3/3 grid. If yes then there is a conflict so return true 
     isConflict(row, col, value) {
-        var curretGrid = this.get3x3GridValues(row, col, initalPuzzle);
-        var cols = this.getColumnValues(col - 1, initalPuzzle);
-        if ((initalPuzzle[row - 1].filter(x => x[2] == value)).length !== 0 ||
+        var curretGrid = this.get3x3GridValues(row, col, initialPuzzle);
+        var cols = this.getColumnValues(col - 1, initialPuzzle);
+        if ((initialPuzzle[row - 1].filter(x => x[2] == value)).length !== 0 ||
             (cols.filter(x => x[2] == value).length != 0) ||
             (curretGrid.filter(x => x[2] == value).length != 0
             )) {
@@ -82,16 +88,16 @@ class PuzzleService {
 
 
     solvePuzzle(input) {
-        currentIterationCount =0;
+        currentIterationCount = 0;
         var sudokuSolution = [];
         this.buildInitialPuzzlewithZeros();
         for (var i = 0; i < input.puzzle.length; i++) {
-            initalPuzzle[(input.puzzle[i].row - 1)][(input.puzzle[i].col - 1)][2] = input.puzzle[i].val;
+            initialPuzzle[(input.puzzle[i].row - 1)][(input.puzzle[i].col - 1)][2] = input.puzzle[i].val;
         }
         if (this.buildPuzzleWithValues()) {
-            for (var row = 0; row < initalPuzzle.length; row++) {
-                for (var col = 0; col < initalPuzzle[row].length; col++) {
-                    sudokuSolution.push(new PuzzleValue(initalPuzzle[row][col][0], initalPuzzle[row][col][1], initalPuzzle[row][col][2]));
+            for (var row = 0; row < initialPuzzle.length; row++) {
+                for (var col = 0; col < initialPuzzle[row].length; col++) {
+                    sudokuSolution.push(new PuzzleValue(initialPuzzle[row][col][0], initialPuzzle[row][col][1], initialPuzzle[row][col][2]));
                 }
             }
         } else {
@@ -102,25 +108,25 @@ class PuzzleService {
 
     buildPuzzleWithValues() {
         currentIterationCount = currentIterationCount + 1;
-        if (currentIterationCount > maxIterations){
+        if (currentIterationCount > maxIterations) {
             return false;
         }
         for (var row = 0; row < numbersFrom1to9.length; row++) {
             for (var col = 0; col < numbersFrom1to9.length; col++) {
-                var cols = this.getColumnValues(col, initalPuzzle);
-                var curretGrid = this.get3x3GridValues(row + 1, col + 1, initalPuzzle);
-                if (initalPuzzle[row][col][2] == 0) {
+                var cols = this.getColumnValues(col, initialPuzzle);
+                var curretGrid = this.get3x3GridValues(row + 1, col + 1, initialPuzzle);
+                if (initialPuzzle[row][col][2] == 0) {
                     for (var num = 1; num <= numbersFrom1to9.length; num++) {
-                        if (((initalPuzzle[row].filter(x => x[2] == num)).length == 0 &&
+                        if (((initialPuzzle[row].filter(x => x[2] == num)).length == 0 &&
                             cols.filter(x => x[2] == num).length == 0) &&
                             (curretGrid.filter(x => x[2] == num).length == 0
                             )) {
-                            initalPuzzle[row][col][2] = num;
+                            initialPuzzle[row][col][2] = num;
                             if (this.buildPuzzleWithValues()) {
                                 return true;
                             }
                             else {
-                                initalPuzzle[row][col][2] = 0;
+                                initialPuzzle[row][col][2] = 0;
                             }
                         }
                     }

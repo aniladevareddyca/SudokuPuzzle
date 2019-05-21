@@ -62,7 +62,7 @@ fdescribe('AppComponent', () => {
   it('should set isBuildYourOwn flag to false for generate new puzzle ', () => {
     app.isBuildYourOwn  = true;
     spyOn(rest, 'getNewPuzzle').and.returnValue(of(new PuzzleInput([new Puzzle(1, 1, 1)])));
-    app.buildNewPuzzle();
+    app.buildNewPuzzle(false);
     expect(app.isBuildYourOwn).toBeFalsy();
   })
   it('should set isBuildYourOwn flag to false if user buils new puzzle ', () => {
@@ -73,7 +73,7 @@ fdescribe('AppComponent', () => {
 
   it('should build new puzzle set the response to inputGridValues', () => {
     spyOn(rest, 'getNewPuzzle').and.returnValue(of(new PuzzleInput([new Puzzle(1, 1, 1)])));
-    app.buildNewPuzzle();
+    app.buildNewPuzzle(false);
     expect(app.inputGridValues).toEqual([new Puzzle(1, 1, 1)]);
   })
 

@@ -14,10 +14,10 @@
     </table>
   </div> 
   <div id="button-div"> 
-    <button type="button" class="btn btn-primary" (click)="buildOwnPuzzle()">Build your own</button>
+    <button type="button" class="btn btn-primary" (click)="buildOwnPuzzle();startTimer()">Build your own</button>
     <button type="button" class="btn btn-primary" (click)="solvePuzzle();clearTimer()">Solve</button>
     <button type="button" class="btn btn-primary"  
-    [disabled]="disableStart" (click)="buildNewPuzzle();startTimer()">Generate New</button>
+    [disabled]="disableStart" (click)="buildNewPuzzle(false);startTimer()">Generate New</button>
   </div> 
 </div>
 <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>

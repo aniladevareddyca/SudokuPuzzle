@@ -1,14 +1,22 @@
 
 #button-div{
 	padding-top:20px;
-	button{
-		width: 183px;
-		margin-left: 10px;
-		margin-bottom: 10px;
+	display: flex;
+	justify-content: center;
+	#own-puzzle-button{
+		margin-right: 124px;
 	}
-	button:disabled{
-		cursor:not-allowed;
-	}
+}
+
+button{
+	width: 186px;
+	margin-left: 10px;
+	margin-bottom: 10px;
+	background-color: #64809e;
+}
+
+#solve-button{
+	padding-top:20px;
 }
 
 input::-webkit-outer-spin-button,

@@ -32,4 +32,4 @@ The project comprises of the following parts
   - Generate new will add a puzzle for you automatically.  
     - In certain scenarios you would not get a solution as not all the auto generated puzzles would have a sudoku solution for it  
   ##
-![Screenshot](https://github.com/aniladevareddyca/SudokuPuzzle/blob/master/web/src/assets/Screenshot%202019-05-20%20at%203.44.17%20PM.png?raw=true)
+![Screenshot](https://github.com/aniladevareddyca/SudokuPuzzle/blob/master/web/src/assets/puzzle_on_page_load.png?raw=true)

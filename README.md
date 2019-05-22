@@ -36,5 +36,8 @@ The project comprises of the following parts
 
   ## Puzzle Solution
   ![Screenshot](https://github.com/aniladevareddyca/SudokuPuzzle/blob/master/web/src/assets/puzzle_solution_on_page_load.png?raw=true)
+  
+  ## Build Your Own Puzzle
+  ![Screenshot](https://github.com/aniladevareddyca/SudokuPuzzle/blob/master/web/src/assets/build_you_own_puzzle.png?raw=true)
 
 

@@ -20,6 +20,7 @@ The project comprises of the following parts
   - To run the project change the directory to web and do the following
     - run npm install 
     - run npm start
+    - Navigate to http://localhost:4200/. 
   - To run the jasmine test cases do the following
     - run npm test
 

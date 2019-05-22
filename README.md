@@ -31,5 +31,10 @@ The project comprises of the following parts
     - If it is a valid sudoku puzzle you would be presented with results.  
   - Generate new will add a puzzle for you automatically.  
     - In certain scenarios you would not get a solution as not all the auto generated puzzles would have a sudoku solution for it  
-  ##
+  ## Puzzle On Page Load
 ![Screenshot](https://github.com/aniladevareddyca/SudokuPuzzle/blob/master/web/src/assets/puzzle_on_page_load.png?raw=true)
+
+  ## Puzzle Solution
+  ![Screenshot](https://github.com/aniladevareddyca/SudokuPuzzle/blob/master/web/src/assets/puzzle_solution_on_page_load.png?raw=true)
+
+

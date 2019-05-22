@@ -20,7 +20,8 @@ The project comprises of the following parts
   - To run the project change the directory to web and do the following
     - run npm install 
     - run npm start
-  - To run the test cases do the following
+  - To run the jasmine test cases do the following
+    - run npm test
 
 ## Sudoku Instructions
   - The intial puzzle is hard coded. To view the results click on solve puzzle.

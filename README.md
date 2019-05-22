@@ -40,4 +40,11 @@ The project comprises of the following parts
   ## Build Your Own Puzzle
   ![Screenshot](https://github.com/aniladevareddyca/SudokuPuzzle/blob/master/web/src/assets/build_you_own_puzzle.png?raw=true)
 
-
+  ## Build Your Own Puzzle Solution
+  ![Screenshot](https://github.com/aniladevareddyca/SudokuPuzzle/blob/master/web/src/assets/build_you_own_puzzle_solution.png?raw=true)
+  
+  ## Generate New Puzzle
+  ![Screenshot](https://github.com/aniladevareddyca/SudokuPuzzle/blob/master/web/src/assets/generate_new_puzzle.png?raw=true)
+  
+  ## Generate New Puzzle Solution
+  ![Screenshot](https://github.com/aniladevareddyca/SudokuPuzzle/blob/master/web/src/assets/generate_new_puzzle_solution.png)
